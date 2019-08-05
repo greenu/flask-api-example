@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 from datetime import datetime
 
-from app import app, _days_to_birthday
+from flask_api.app import app, _days_to_birthday
 
 # https://williambert.online/2011/07/how-to-unit-testing-in-django-with-mocking-and-patching/
 class FakeDatetime(datetime):
@@ -17,7 +17,7 @@ class AppGoodTestCase(unittest.TestCase):
         self.app = app.test_client()
         self.app = app.test_client()
 
-    @patch('app._days_to_birthday', return_value = 363)
+    @patch('flask_api.app._days_to_birthday', return_value = 363)
     def test_get(self, days):
         """ test get when 363 days to birthday """
         username = 'user'
@@ -26,7 +26,7 @@ class AppGoodTestCase(unittest.TestCase):
         json_data = rv.get_json()
         self.assertEqual(f'Hello, {username}! Your birtday is in 363 day(s)', json_data['message'])
 
-    @patch('app._days_to_birthday', return_value = 0)    
+    @patch('flask_api.app._days_to_birthday', return_value = 0)
     def test_get_birthday(self, days):
         """ test get on birthday"""
         username = 'user'
@@ -64,7 +64,7 @@ class DaysToBirthdayTestCase(unittest.TestCase):
     def setUp(self):
         self.user_date = '2000-03-01'
 
-    @patch('app.datetime', FakeDatetime)
+    @patch('flask_api.app.datetime', FakeDatetime)
     def test_days_to_birthday_yesterday(self):
         """ test days to birthday """
         today_date = datetime(2018, 3, 2)
@@ -72,7 +72,7 @@ class DaysToBirthdayTestCase(unittest.TestCase):
         result = _days_to_birthday(self.user_date)
         self.assertEqual(result, 364)
     
-    @patch('app.datetime', FakeDatetime)
+    @patch('flask_api.app.datetime', FakeDatetime)
     def test_days_to_birthday_today(self):
         """ test days to birthday today """
         today_date = datetime(2018, 3, 1)
@@ -80,7 +80,7 @@ class DaysToBirthdayTestCase(unittest.TestCase):
         result = _days_to_birthday(self.user_date)
         self.assertEqual(result, 0)
 
-    @patch('app.datetime', FakeDatetime)
+    @patch('flask_api.app.datetime', FakeDatetime)
     def test_days_to_birthday_leapyear(self):
         """ test days to birthday work correctly in 2020 leap year """
         today_date = datetime(2019, 3, 2)
