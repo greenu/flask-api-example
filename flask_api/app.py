@@ -44,35 +44,5 @@ def _days_to_birthday(date: str) -> int:
     days_left = next_bd.date() - now.date()
     return days_left.days
 
-
-# @app.route('/hello')
-# def hello_world():
-#     return 'Hello, World!'
-
-# ### saves/updates users
-# ### PUT /hello/<username> { "dateOfBirth": "YYYY-MM-DD" }
-# ### 204 No content
-# ### <username> only letters
-# ### YYYY-MM-DD date must be before today
-# @app.route('/hello/<username>', methods=['GET', 'PUT'])
-# def user(username):
-#     if request.method == 'PUT':
-#         #returns the username
-#         a = json.loads(request.form)
-#         return a
-#     if request.method == 'GET':
-#         # users = get_all_users()
-#         # return jsonify([user.to_json() for user in users])
-#         return request.form
-
-
-# def get_all_users():
-#     return users
-# # @app.route("/users")
-# # def users_api():
-#     # users = get_all_users()
-#     # return jsonify([user.to_json() for user in users])
-
-
 if __name__ == '__main__':
     app.run(debug=True)
