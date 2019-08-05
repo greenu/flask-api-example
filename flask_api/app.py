@@ -26,6 +26,10 @@ class Hello(Resource):
         # expected data: { "dateOfBirth": "YYYY-MM-DD" }
         # force=True means don't expect 'application/json'
         json_content = request.get_json(force=False)
+
+        if not str.isalpha(username):
+            return ({'status': 400, 'message': 'Invalid username'}, 400)
+
         # validate key and value
         try:
             _validate_date(json_content['dateOfBirth'])

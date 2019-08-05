@@ -46,14 +46,18 @@ class AppBadTestCase(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
 
-    @unittest.skip
+    def test_put_invalid_input(self):
+        """ test put bad date """
+        username = 'user'
+        rv = self.app.put(f'/hello/{username}', json={'hey_you': '2019-01-01'})
+        self.assertEqual(400, rv.status_code)
+
     def test_put_bad_date(self):
         """ test put bad date """
         username = 'user'
         rv = self.app.put(f'/hello/{username}', json={'dateOfBirth': '9999-99-99'})
         self.assertEqual(400, rv.status_code)
 
-    @unittest.skip    
     def test_put_bad_username(self):
         """ test username must contain only letters """
         username = 'user111'
