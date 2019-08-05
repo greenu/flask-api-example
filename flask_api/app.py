@@ -26,10 +26,21 @@ class Hello(Resource):
         # expected data: { "dateOfBirth": "YYYY-MM-DD" }
         # force=True means don't expect 'application/json'
         json_content = request.get_json(force=False)
+        # validate key and value
+        try:
+            _validate_date(json_content['dateOfBirth'])
+        except:
+            return ({'status': 400, 'message': 'Invalid data provided'}, 400)
         users[username] = json_content
-        return '', 204
+        return ('', 204)
 
 api.add_resource(Hello, '/hello/<string:username>')
+
+def _validate_date(date: str) -> bool:
+    try:
+        datetime.strptime(date, '%Y-%m-%d')
+    except ValueError:
+        raise
 
 def _days_to_birthday(date: str) -> int:
     """ Returns days left to birthday """
