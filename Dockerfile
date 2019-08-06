@@ -14,7 +14,7 @@ COPY deploy/uwsgi.ini deploy/start.sh /app/
 COPY ./requirements.txt /app/requirements.txt
 WORKDIR /app
 RUN pip install -r requirements.txt
-COPY flask_api /app
+COPY flask_api /app/flask_api/
 
 EXPOSE 80
 
