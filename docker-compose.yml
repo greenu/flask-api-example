@@ -1,4 +1,4 @@
-version: "2"
+version: "2.1"
 services:
   app:
     build: .
@@ -6,6 +6,9 @@ services:
       - db
     ports:
       - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     image: mysql:5.7
     ports:
@@ -13,5 +16,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: flask
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      timeout: 20s
+      retries: 10
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
