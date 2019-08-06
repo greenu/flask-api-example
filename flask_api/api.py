@@ -13,8 +13,12 @@ app = Flask(__name__)
 config_name = os.getenv('FLASK_ENV') or 'development'
 app.config.from_object(config_by_name[config_name])
 db.init_app(app)
-api = Api(app)
 
+# create tables. TODO: refactor me
+with app.app_context():
+    db.create_all()
+
+api = Api(app)
 
 class Hello(Resource):
     def get(self, username):
