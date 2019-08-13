@@ -9,7 +9,8 @@ from flask_api import db
 from flask_api.config import config_by_name
 from flask_api.models import User
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application # beanstalk requires this weirdness
 config_name = os.getenv('FLASK_ENV') or 'development'
 app.config.from_object(config_by_name[config_name])
 db.init_app(app)
@@ -56,7 +57,12 @@ class Hello(Resource):
             return ({'status': 409, 'message': 'Username already exists'}, 409)
         return ('', 204)
 
+class Health(Resource):
+    def get(self):
+        return ({'status': 200, 'message': 'Health OK'}, 200)
+
 api.add_resource(Hello, '/hello/<string:username>')
+api.add_resource(Health, '/healthcheck')
 
 def _validate_date(date: str) -> bool:
     try:

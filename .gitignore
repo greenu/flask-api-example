@@ -3,3 +3,6 @@ __pycache__
 *.egg*
 test-reports/*
 dist/*
+*.tfstate*
+.terraform
+dist.zip
