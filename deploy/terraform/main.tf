@@ -1,3 +1,7 @@
+terraform {
+  required_version = "~>0.11.14"
+}
+
 provider "aws" {
   region = "${var.region}"
 }
@@ -58,13 +62,10 @@ module "elastic_beanstalk_environment" {
   # TODO: fix https://github.com/cloudposse/terraform-aws-elastic-beanstalk-environment/issues/43
   source  = "cloudposse/elastic-beanstalk-environment/aws"
   version = "0.13.0"
-  # insert the 8 required variables here
   namespace = "${var.namespace}"
   stage     = "${var.environment}"
   name      = "${var.app}"
-#   zone_id   = "${var.zone_id}"
   app       = "${module.elastic_beanstalk_application.app_name}"
-#   application_port = "5000"
 
   instance_type           = "t2.small"
   autoscale_min           = 1

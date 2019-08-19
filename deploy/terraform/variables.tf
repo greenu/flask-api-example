@@ -23,5 +23,5 @@ variable "max_availability_zones" {
 }
 
 variable "keypair" {
-    default = "devops_vpc_infra"
+    default = "ssh_keypair"
 }
